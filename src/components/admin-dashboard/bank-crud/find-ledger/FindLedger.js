@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { findLedgerById } from "../../../../services/admin/adminServices";
+import AdminHeader from "../../../../shared-components/header/AdminHeader";
 
 const FindLedger = () => {
   const [ledgerId, setLedgerId] = useState("");
@@ -33,6 +34,7 @@ const FindLedger = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-blue-500 via-blue-400 to-indigo-300">
       {/* Header */}
+      <AdminHeader />
       <div className="text-white p-6">
         <h1 className="text-4xl font-bold">Find Ledger</h1>
         <p className="text-md mt-2">Search for a ledger by entering its ID.</p>

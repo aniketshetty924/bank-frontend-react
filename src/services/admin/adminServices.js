@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 export const createUser = async (formData) => {
   try {
@@ -37,6 +37,26 @@ export const findUserById = async (userId, include) => {
       },
     });
 
+    console.log("Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user:", error.message);
+    throw error;
+  }
+};
+export const findUserByUsername = async (username, include) => {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) throw new Error("Unauthorized error");
+    const url = `http://localhost:4500/api/v1/user/get/${username}`;
+    const response = await axios.get(url, {
+      headers: {
+        auth: `Bearer ${token}`,
+      },
+      params: {
+        include: include,
+      },
+    });
     console.log("Response:", response.data);
     return response.data;
   } catch (error) {
@@ -240,5 +260,58 @@ export const findAllLedgers = async (filters) => {
     return response;
   } catch (error) {
     console.log("Error in get all banks ", error);
+  }
+};
+
+export const getKycRequestsService = async ({ page, limit }) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      throw new Error("No token found. Please log in.");
+    }
+
+    const response = await axios.get(
+      "http://localhost:4500/api/v1/kyc-request",
+      {
+        headers: { auth: token },
+        params: { page, limit },
+      }
+    );
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error("Error fetching KYC requests:", error);
+    throw new AxiosError(
+      error.message,
+      error.config,
+      error.code,
+      error.request,
+      error.response
+    );
+  }
+};
+
+export const approveOrRejectKycRequestService = async (
+  userId,
+  status,
+  note
+) => {
+  try {
+    const token = localStorage.getItem("token");
+    console.log(status, " ", note);
+
+    const response = await axios.put(
+      `http://localhost:4500/api/v1/kyc-request`,
+      { userId: userId, status: status, adminNote: note },
+      {
+        headers: { auth: token },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Error fetching KYC:", error);
+    throw new AxiosError(error);
   }
 };

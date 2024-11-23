@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { findBankById } from "../../../../services/admin/adminServices";
+import AdminHeader from "../../../../shared-components/header/AdminHeader";
 
 const FindBank = () => {
   const [bankId, setBankId] = useState("");
@@ -46,6 +47,7 @@ const FindBank = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-400 relative">
+      <AdminHeader />
       {/* Header */}
       <div className="text-white p-6 shadow-md">
         <h1 className="text-4xl font-bold">Find Bank</h1>

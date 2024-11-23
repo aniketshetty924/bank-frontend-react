@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import { createUser } from "../../../../services/admin/adminServices";
+import AdminHeader from "../../../../shared-components/header/AdminHeader";
 
 const UserRegistration = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    age: "",
+    dob: "",
+    email: "",
     username: "",
     password: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [createdUser, setCreatedUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: name === "age" ? parseInt(value, 10) || "" : value,
+      [name]: value,
     }));
   };
 
@@ -33,25 +36,31 @@ const UserRegistration = () => {
       console.log("Final response: ", response);
 
       setCreatedUser(response);
+      setIsModalOpen(true); // Open the modal after user creation
 
+      // Reset the form data
       setFormData({
         firstName: "",
         lastName: "",
-        age: "",
+        dob: "",
+        email: "",
         username: "",
         password: "",
       });
-
-      alert("User Registered Successfully!");
     } catch (err) {
       console.error("Error registering user:", err);
       alert("Failed to register user.");
     }
   };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-purple-600 via-indigo-500 to-blue-400 relative">
       {/* Header */}
+      <AdminHeader />
       <div className="text-white p-6 shadow-md">
         <h1 className="text-4xl font-bold">User Registration</h1>
         <p className="text-md text-blue-200 mt-2">
@@ -60,7 +69,7 @@ const UserRegistration = () => {
       </div>
 
       {/* Form Section */}
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center mt-8">
         <form
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-3xl shadow-2xl w-full max-w-lg transform hover:scale-105 transition-transform duration-300"
@@ -101,18 +110,34 @@ const UserRegistration = () => {
             />
           </div>
 
-          {/* Age */}
+          {/* Date of Birth */}
           <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">Age</label>
+            <label className="block text-gray-700 font-medium mb-2">
+              Date of Birth
+            </label>
             <input
-              type="number"
-              name="age"
-              value={formData.age}
+              type="date"
+              name="dob"
+              value={formData.dob}
               onChange={handleInputChange}
-              placeholder="Enter your age"
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-indigo-400 focus:border-transparent"
               required
-              min="1"
+            />
+          </div>
+
+          {/* Email */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="Enter your email"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-4 focus:ring-indigo-400 focus:border-transparent"
+              required
             />
           </div>
 
@@ -167,9 +192,9 @@ const UserRegistration = () => {
         </form>
       </div>
 
-      {/* Created User Card */}
-      {createdUser && (
-        <div className="mt-8 flex justify-center">
+      {/* Modal for User Details */}
+      {isModalOpen && createdUser && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
             <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">
               User Created Successfully
@@ -178,15 +203,26 @@ const UserRegistration = () => {
               <strong>ID:</strong> {createdUser.id}
             </p>
             <p className="text-gray-700">
-              <strong>Name:</strong> {createdUser.firstName}{" "}
-              {createdUser.lastName}
+              <strong>Name:</strong> {createdUser.fullName}
             </p>
             <p className="text-gray-700">
-              <strong>Age:</strong> {createdUser.age}
+              <strong>Date of Birth:</strong> {createdUser.dateOfBirth}
+            </p>
+            <p className="text-gray-700">
+              <strong>Email:</strong> {createdUser.email}
             </p>
             <p className="text-gray-700">
               <strong>Username:</strong> {createdUser.username}
             </p>
+
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={closeModal}
+                className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-2 rounded-lg shadow-md hover:from-indigo-600 hover:to-purple-700 focus:outline-none focus:ring-4 focus:ring-indigo-300"
+              >
+                OK
+              </button>
+            </div>
           </div>
         </div>
       )}

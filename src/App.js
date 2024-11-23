@@ -15,62 +15,42 @@ import UpdateBank from "./components/admin-dashboard/bank-crud/update-bank/Updat
 import DeleteBank from "./components/admin-dashboard/bank-crud/delete-bank/DeleteBank";
 import FindLedger from "./components/admin-dashboard/bank-crud/find-ledger/FindLedger";
 import FindAllLedgers from "./components/admin-dashboard/bank-crud/find-all-ledgers/FindAllLedgers";
+import KycRequests from "./components/admin-dashboard/kyc-requests/KycRequests";
+import KYC from "./components/user-dashboard/kyc/KYC";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/admin-dashboard/:userId" element={<AdminDashboard />} />
-        <Route path="/user-dashboard/:userId" element={<UserDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route
-          path="/admin-dashboard/:userId/user-registration"
+          path="/admin-dashboard/user-registration"
           element={<UserRegistration />}
         />
+        <Route path="/admin-dashboard/find-user" element={<FindUser />} />
         <Route
-          path="/admin-dashboard/:userId/find-user"
-          element={<FindUser />}
-        />
-        <Route
-          path="/admin-dashboard/:userId/find-all-users"
+          path="/admin-dashboard/find-all-users"
           element={<FindAllUsers />}
         />
+        <Route path="/admin-dashboard/delete-user" element={<DeleteUser />} />
+        <Route path="/admin-dashboard/update-user" element={<UpdateUser />} />
+        <Route path="/admin-dashboard/create-bank" element={<CreateBank />} />
         <Route
-          path="/admin-dashboard/:userId/delete-user"
-          element={<DeleteUser />}
-        />
-        <Route
-          path="/admin-dashboard/:userId/update-user"
-          element={<UpdateUser />}
-        />
-        <Route
-          path="/admin-dashboard/:userId/create-bank"
-          element={<CreateBank />}
-        />
-        <Route
-          path="/admin-dashboard/:userId/find-all-banks"
+          path="/admin-dashboard/find-all-banks"
           element={<FindAllBanks />}
         />
+        <Route path="/admin-dashboard/find-bank" element={<FindBank />} />
+        <Route path="/admin-dashboard/update-bank" element={<UpdateBank />} />
+        <Route path="/admin-dashboard/delete-bank" element={<DeleteBank />} />
+        <Route path="/admin-dashboard/find-ledger" element={<FindLedger />} />
         <Route
-          path="/admin-dashboard/:userId/find-bank"
-          element={<FindBank />}
-        />
-        <Route
-          path="/admin-dashboard/:userId/update-bank"
-          element={<UpdateBank />}
-        />
-        <Route
-          path="/admin-dashboard/:userId/delete-bank"
-          element={<DeleteBank />}
-        />
-        <Route
-          path="/admin-dashboard/:userId/find-ledger"
-          element={<FindLedger />}
-        />
-        <Route
-          path="/admin-dashboard/:userId/find-all-ledgers"
+          path="/admin-dashboard/find-all-ledgers"
           element={<FindAllLedgers />}
         />
+        <Route path="/admin-dashboard/kyc-requests" element={<KycRequests />} />
+        <Route path="/user-dashboard/kyc" element={<KYC />} />
       </Routes>
     </BrowserRouter>
   );

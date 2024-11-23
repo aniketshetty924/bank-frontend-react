@@ -3,6 +3,7 @@ import {
   findBankById,
   updateBankById,
 } from "../../../../services/admin/adminServices";
+import AdminHeader from "../../../../shared-components/header/AdminHeader";
 
 const UpdateBank = () => {
   const [bankId, setBankId] = useState("");
@@ -74,6 +75,7 @@ const UpdateBank = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-r from-green-400 to-blue-500">
       {/* Header */}
+      <AdminHeader />
       <div className="text-white p-6">
         <h1 className="text-4xl font-bold">Update Bank</h1>
         <p className="text-md mt-2">

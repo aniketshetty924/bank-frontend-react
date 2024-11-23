@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { createBank } from "../../../../services/admin/adminServices"; // Update this import path to your service location
+import { createBank } from "../../../../services/admin/adminServices";
+import AdminHeader from "../../../../shared-components/header/AdminHeader";
 
 const CreateBank = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ const CreateBank = () => {
   });
 
   const [createdBank, setCreatedBank] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false); // State to manage modal visibility
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -20,18 +22,17 @@ const CreateBank = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await createBank(formData); // Call API to create bank
+      const response = await createBank(formData);
       console.log("Form Data Submitted: ", formData);
       console.log("Final response: ", response);
 
-      setCreatedBank(response); // Set the created bank data to display the card
+      setCreatedBank(response); // Set the created bank data
+      setIsModalVisible(true); // Show the modal
 
       setFormData({
         bankName: "",
         bankAbbreviation: "",
       });
-
-      alert("Bank Created Successfully!");
     } catch (err) {
       console.error("Error creating bank:", err);
       alert("Failed to create bank.");
@@ -40,6 +41,7 @@ const CreateBank = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-green-600 via-teal-500 to-blue-400 relative">
+      <AdminHeader />
       {/* Header */}
       <div className="text-white p-6 shadow-md">
         <h1 className="text-4xl font-bold">Create Bank</h1>
@@ -102,9 +104,9 @@ const CreateBank = () => {
         </form>
       </div>
 
-      {/* Created Bank Card */}
-      {createdBank && (
-        <div className="mt-8 flex justify-center">
+      {/* Modal */}
+      {isModalVisible && createdBank && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
             <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">
               Bank Created Successfully
@@ -118,6 +120,14 @@ const CreateBank = () => {
             <p className="text-gray-700">
               <strong>Abbreviation:</strong> {createdBank.abbreviation}
             </p>
+            <div className="flex justify-center mt-4">
+              <button
+                onClick={() => setIsModalVisible(false)} // Hide the modal
+                className="bg-teal-500 text-white px-6 py-2 rounded-lg hover:bg-teal-600 focus:outline-none"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}

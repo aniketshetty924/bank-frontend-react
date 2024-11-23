@@ -4,6 +4,7 @@ import {
   deleteBankById,
   findBankById,
 } from "../../../../services/admin/adminServices";
+import AdminHeader from "../../../../shared-components/header/AdminHeader";
 
 const DeleteBank = () => {
   const [bankId, setBankId] = useState("");
@@ -82,6 +83,7 @@ const DeleteBank = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-bl from-blue-500 via-blue-400 to-indigo-300 relative">
       {/* Header */}
+      <AdminHeader />
       <div className="text-white p-6 shadow-md">
         <h1 className="text-4xl font-bold">Delete Bank</h1>
         <p className="text-md text-blue-200 mt-2">

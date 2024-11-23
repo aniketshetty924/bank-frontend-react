@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { findUserById } from "../../../../services/admin/adminServices";
+import AdminHeader from "../../../../shared-components/header/AdminHeader";
 
 const FindUser = () => {
   const [userId, setUserId] = useState("");
@@ -47,6 +48,7 @@ const FindUser = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-green-600 via-teal-500 to-blue-400 relative">
       {/* Header */}
+      <AdminHeader />
       <div className="text-white p-6 shadow-md">
         <h1 className="text-4xl font-bold">Find User</h1>
         <p className="text-md text-blue-200 mt-2">
@@ -102,7 +104,16 @@ const FindUser = () => {
                 <strong>Name:</strong> {user.fullName}
               </p>
               <p className="text-gray-700">
+                <strong>Date of Birth:</strong> {user.dateOfBirth}
+              </p>
+              <p className="text-gray-700">
+                <strong>Email:</strong> {user.email}
+              </p>
+              <p className="text-gray-700">
                 <strong>Username:</strong> {user.username}
+              </p>
+              <p className="text-gray-700">
+                <strong>KYC Status:</strong> {user.kycStatus}
               </p>
 
               {/* Show Accounts Button */}
